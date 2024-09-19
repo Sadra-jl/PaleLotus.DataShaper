@@ -1,0 +1,77 @@
+using System.Collections.Concurrent;
+using System.Diagnostics.CodeAnalysis;
+using System.Text;
+
+namespace PaleLotus.DataShaper;
+
+public abstract class Entity : IEquatable<Entity>
+{
+    private static readonly ConcurrentDictionary<string, string> SortedFieldCache = new();
+
+    protected static string GetSortedFields(string[]? fields)
+    {
+        if (fields is null) return string.Empty;
+
+        var key = string.Join(",", fields);
+        return SortedFieldCache.TryGetValue(key, out var sortedFields) ? sortedFields : SortAndCacheFields(fields);
+    }
+
+    private static string SortAndCacheFields(string[] fields)
+    {
+        Array.Sort(fields, StringComparer.Ordinal);
+        var sb = new StringBuilder();
+        foreach (var field in fields)
+        {
+            sb.Append(field);
+            sb.Append(",");
+        }
+        var sortedFields = sb.ToString().TrimEnd(',');
+        SortedFieldCache[string.Join(",", fields)] = sortedFields;
+        return sortedFields;
+    }
+    
+    public int CompareTo(Entity? other) => other == null ? 1 : GetHashCode().CompareTo(other.GetHashCode());
+
+    private int? _cachedHashCode;
+
+    [SuppressMessage("ReSharper", "NonReadonlyMemberInGetHashCode")]
+    public override int GetHashCode()
+    {
+        if (_cachedHashCode.HasValue)
+            return _cachedHashCode.Value;
+        
+        var hash = 17;
+        foreach (var prop in GetType().GetProperties())
+            hash = HashCode.Combine(hash, prop.GetValue(this)?.GetHashCode() ?? 0);
+        
+        _cachedHashCode = hash;
+        return hash;
+    }
+
+    public bool Equals(Entity? other)
+    {
+        if (other is null) return false;
+        return GetType() == other.GetType() && GetHashCode() == other.GetHashCode();
+    }
+
+    public override string ToString()
+    {
+        var properties = GetType().GetProperties();
+        var sb = new StringBuilder();
+        
+        foreach (var prop in properties)
+        {
+            sb.Append($"{prop.Name}={prop.GetValue(this)}, ");
+            try
+            {
+                sb.Append($"{prop.Name}={prop.GetValue(this)}, ");
+            }
+            catch (Exception)
+            {
+                return $"{prop.Name}=Error retrieving value, ";
+            }
+        }
+        
+        return $"{GetType().Name} [{sb.ToString().TrimEnd(',', ' ')}]";
+    }
+}
