@@ -5,7 +5,7 @@ public record DtosToGenerate : TypeToGenerate
     private readonly List<(string Name, string Type)> _combination;
 
     public DtosToGenerate(string typeName, List<string> values, string accessModifiers, string dataType,
-        string nameSpace, List<(string Name, string Type)> combination) : base(typeName, values, accessModifiers, dataType, $"{nameSpace}.Dtos")
+        string nameSpace, List<(string Name, string Type)> combination) : base(typeName, values, "internal", dataType, $"{nameSpace}.Dtos")
     {
         _combination = combination;
     }

@@ -9,7 +9,8 @@ public record ShaperToGenerate : TypeToGenerate
     private readonly string _defaultNamespace;
 
     public ShaperToGenerate(string typeName, List<string> values, string accessModifiers, string dataType,
-        string nameSpace, IEnumerable<List<string>> combinations) : base(typeName, values, accessModifiers, dataType, $"{nameSpace}.Shapers")
+        string nameSpace, IEnumerable<List<string>> combinations) 
+        : base(typeName, values, accessModifiers, dataType, $"{nameSpace}.Shapers")
     {
         _combinations = combinations;
         _defaultNamespace = nameSpace;
@@ -29,17 +30,21 @@ public record ShaperToGenerate : TypeToGenerate
 
     protected override string GenerateBody()
     {
+        var dtoName = $"{TypeName}{string.Join("", Properties.Select(f => f.Replace(".", "_")))}Dto";
+            
         return $$"""
                  {{GenerateSelectorDictionary()}}
                  
                  public IQueryable<Entity> ShapeData(IQueryable<{{TypeName}}> source, string[] fields)
                  {
                     var orderedFields = GetSortedFields(fields);
-                    return _selectors.TryGetValue(orderedFields, out var selector) ? selector(source) : source;
+                    return _selectors.TryGetValue(orderedFields, out var selector) 
+                    ? selector(source) 
+                    : source.Select(e => new {{dtoName}} { {{string.Join(", ", Properties.Select(f => $"{f.Replace(".", "_")} = e.{f.Replace(".", ".")}"))}} });
                  }
                  """;
     }
-    
+
     private string GenerateSelectorDictionary()
     {
         var dictionaryEntries = new StringBuilder();

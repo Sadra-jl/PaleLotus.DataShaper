@@ -77,7 +77,10 @@ public class Generator : IIncrementalGenerator
         var combinationsWithType = GetFieldCombinations(membersWithType).ToList();
         var combinations = combinationsWithType.Select(combination => combination.Select(state => state.Name).ToList()).ToList();
 
-        var shaper = new ShaperToGenerate(name, members, typeSymbol.GetAccessModifier(),
+        var propertiesWithType = GetMembersNameAndType(typeSymbol, false);
+        var properties = propertiesWithType.Select(member => member.Name).ToList(); 
+        
+        var shaper = new ShaperToGenerate(name, properties, typeSymbol.GetAccessModifier(),
             typeSymbol.GetTypeKind(), typeSyntax!.GetNamespace(), combinations);
 
         var dtos = new List<DtosToGenerate>(combinations.Count);

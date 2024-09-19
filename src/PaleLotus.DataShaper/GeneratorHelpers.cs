@@ -70,7 +70,7 @@ internal static class GeneratorHelpers
         return nameSpace;
     }
 
-    public static List<(string Name, string Type)> GetMembersNameAndType(INamedTypeSymbol type, string prefix = "")
+    public static List<(string Name, string Type)> GetMembersNameAndType(INamedTypeSymbol type, bool nested = true, string prefix = "")
     {
         var members = new List<(string Name, string Type)>();
 
@@ -85,8 +85,8 @@ internal static class GeneratorHelpers
             
             members.Add((memberName, memberType.ToDisplayString()));
 
-            if (IsComplexType(memberType))
-                members.AddRange(GetMembersNameAndType((INamedTypeSymbol)memberType, memberName));
+            if (nested && IsComplexType(memberType))
+                members.AddRange(GetMembersNameAndType((INamedTypeSymbol)memberType, nested, memberName));
         }
 
         return members;

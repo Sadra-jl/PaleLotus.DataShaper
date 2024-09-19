@@ -9,9 +9,9 @@ public abstract record TypeToGenerate
     protected string Namespace { get; set; }
     private string AccessModifiers { get; }
     private string DataType { get; }
-    private EquatableArray<string> Properties { get; }
+    protected EquatableArray<string> Properties { get; }
     protected bool IsStatic { get; set; }
-    private string TypeDeclaration => $"{AccessModifiers}{(IsStatic ? " static" : "")} {DataType}";
+    protected virtual string TypeDeclaration => $"{AccessModifiers}{(IsStatic ? " static" : "")} {DataType}";
     protected abstract string FullTypeName { get; }
     protected abstract IEnumerable<string> Usings { get; }
     
