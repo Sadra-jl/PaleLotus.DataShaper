@@ -3,7 +3,7 @@
   "profiles": {
     "Generators": {
       "commandName": "DebugRoslynComponent",
-      "targetProject": "../../ConsoleApp1/ConsoleApp1.csproj"
+      "targetProject": "../PaleLotus.Benchmarks/PaleLotus.Benchmarks.csproj"
     }
   }
 }

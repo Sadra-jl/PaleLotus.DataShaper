@@ -1,2 +1,5 @@
 implement xml attribute detection and implementation
 include attribute overload for lower strings
+let user ignore properties and fields
+add a shaper manager (use partial classes)
+add shaper for a single entity

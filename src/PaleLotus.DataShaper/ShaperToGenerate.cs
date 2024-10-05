@@ -17,7 +17,7 @@ public record ShaperToGenerate : TypeToGenerate
     }
 
     protected override string FullTypeName =>
-        $" {TypeName}Shaper : Entity, {nameof(IDataShaper)}<{TypeName}>";
+        $" {TypeName}Shaper : Entity, {GeneratorHelpers.ProjectNameSpace}.{nameof(IDataShaper)}<{TypeName}>";
 
     protected override IEnumerable<string> Usings =>
     [
