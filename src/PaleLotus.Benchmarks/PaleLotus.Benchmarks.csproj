@@ -8,9 +8,11 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\src\PaleLotus.DataShaper\PaleLotus.DataShaper.csproj" 
-                        OutputItemType="Analyzer" 
-                        ReferenceOutputAssembly="false" />
+      <ProjectReference Include="..\PaleLotus.DataShaper\PaleLotus.DataShaper.csproj"
+            OutputItemType="Analyzer"
+            ReferenceOutputAssembly="false" />
     </ItemGroup>
+
+
 
 </Project>

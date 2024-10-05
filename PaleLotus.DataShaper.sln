@@ -2,7 +2,7 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PaleLotus.DataShaper", "src\PaleLotus.DataShaper\PaleLotus.DataShaper.csproj", "{0BE80B93-9BDC-4862-9B91-8975D30832ED}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConsoleApp1", "ConsoleApp1\ConsoleApp1.csproj", "{9A551D89-F920-4024-8234-94E1DAB509B1}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PaleLotus.Benchmarks", "src\PaleLotus.Benchmarks\PaleLotus.Benchmarks.csproj", "{9A551D89-F920-4024-8234-94E1DAB509B1}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
