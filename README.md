@@ -101,4 +101,4 @@ Contributions are welcome! Open issues or submit pull requests.
 
 ## License
 
-Licensed under the MIT License.
+This repository is licensed under the MIT License. See the [LICENSE](./LICENSE) file for details.
